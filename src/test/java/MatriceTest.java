@@ -1,10 +1,10 @@
-package tests;
+package test.java;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import geo.Matrice;
+import main.java.Matrice;
 
 public class MatriceTest
 {

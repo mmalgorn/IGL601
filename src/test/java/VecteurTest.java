@@ -1,4 +1,4 @@
-package tests;
+package test.java;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import geo.Vecteur;
+import main.java.Vecteur;
 
 public class VecteurTest {
 
