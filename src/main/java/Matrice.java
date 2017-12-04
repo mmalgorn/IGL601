@@ -1,148 +1,157 @@
+/*
+ * classe modifiee par Melissa L'henoret
+ * matricule: 17 148 784
+ */
+
 package main.java;
 
-
-import java.util.Arrays;
-
 /*
- * Classe representant une matrice. Composee d'une liste
- * de vecteurs. Chaque rangee de la matrice est un vecteur.
+ * Classe repr�sentant une matrice. Compos�e d'une liste
+ * de vecteurs. Chaque rang�e de la matrice est un vecteur.
  */
 public class Matrice {
 
-    //Attributs
-    
-    private Vecteur[] lignes;
+	private Vecteur[] lignes;
 
-    //Constructeurs
+	public Matrice(double[][] dat) {
 
-    //Avec tableau de valeurs
-    public Matrice(double[][] dat) {
+		lignes = new Vecteur[dat.length];
 
-        lignes = new Vecteur[dat.length];
+		for (int i = 0; i < dat.length; i++) {
 
-        for (int i = 0; i < dat.length; i++) {
+			lignes[i] = new Vecteur(dat[i]);
 
-            lignes[i] = new Vecteur(dat[i]);
+		}
+	}
+	
+	private Matrice(int ligne, int colonne) {
+	    double[][] mat = new double[ligne][colonne];
+	    lignes = new Vecteur[mat.length];
+	    for(int i=0; i<ligne; i++){
+	        this.lignes[i] = new Vecteur(mat[i]); 
+	    }
+	    
+	}
 
-        }
-    }
-    
-    //Avec taille (remplis de 0)
-    public Matrice(int ligne,int colonne){
-        lignes = new Vecteur[ligne];
+	/*
+	 * �limination Gaussienne. Let me google that for you... Impl�mentation
+	 * suivant le pseudo-code classique.
+	 */
+	public void Gauss() {
 
-        for (int i = 0; i < ligne; i++) {
+		int noLigne = 0;
+		if(this.lignes[0].taille() == (this.tailleMatrice()+1)) {
+			for (Vecteur ligne : lignes) {
+				double pivot = ligne.getValeur(noLigne);
+				if (pivot != 0) {
+					double pivotInverse = 1.0 / pivot;
+					for (int i = 0; i < ligne.taille(); i++) {
+						ligne.setValeur(i, ligne.getValeur(i) * pivotInverse);
+					}
+				}
 
-            lignes[i] = new Vecteur(colonne);
+				for (Vecteur ligneElim : lignes) {
+					if (ligneElim != ligne) {
+						double f = ligneElim.getValeur(noLigne);
+						for (int i = 0; i < ligneElim.taille(); ++i) {
+							ligneElim.setValeur(i, ligneElim.getValeur(i) - f * ligne.getValeur(i));
+						}
+					}
+				}
+				noLigne++;
+			}
+		}
+		else throw new IllegalArgumentException("erreur");
+	
+	}
+	
+	public String toString() {
 
-        }    
-    }
+		String res = "";
 
-    //Accesseurs et infos
+		for (Vecteur v : lignes) {
+			res += v + "\n";
+		}
 
-    public int nombreLigne(){
+		return res;
+	}
+	
+	public int tailleMatrice(){
         return lignes.length;
-    }
-    
-    
-    public int nombreColonne(){
-        return lignes[0].taille();
-    }
-    
-    public Vecteur getLigne(int i){
-        return lignes[i];
+        
     }
 
-    //Methodes
-    
-    /*
-     * elimination Gaussienne. Let me google that for you... Implementation
-     * suivant le pseudo-code classique.
-     */
-    public void Gauss() {
-        if (lignes[0].taille()-1!=lignes.length){
-            throw new IllegalArgumentException("Gauss impossible : La matrice n'est pas carrÃ©e");
-        }
-        int noLigne = 0;
-        for (Vecteur ligne : lignes) {
-            double pivot = ligne.getValeur(noLigne);
-            if (pivot != 0) {
-                double pivotInverse = 1.0 / pivot;
-                for (int i = 0; i < ligne.taille(); i++) {
-                    ligne.setValeur(i, ligne.getValeur(i) * pivotInverse);
-                }
+	public boolean equals(Matrice mat){
+        boolean resultat = true;
+        
+        if(this instanceof Matrice){
+            
+            if(this.tailleMatrice() == mat.tailleMatrice()){
+               int i=0;
+               while( i<mat.tailleMatrice() && resultat != false){
+                   
+                   resultat = this.lignes[i].equals(mat.lignes[i],0.01);
+                   i++;
+               }
+                return resultat;
+                
             }
-
-            for (Vecteur ligneElim : lignes) {
-                if (ligneElim != ligne) {
-                    double f = ligneElim.getValeur(noLigne);
-                    for (int i = 0; i < ligneElim.taille(); ++i) {
-                        ligneElim.setValeur(i, ligneElim.getValeur(i) - f * ligne.getValeur(i));
-                    }
-                }
-            }
-            noLigne++;
         }
+        return false;
     }
-    
+	
+	public Vecteur getLigne(int l) {
+		
+		return this.lignes[l];
+	}
+	
+	public Matrice SousMatrice(int nbligne, int nbcolonne) {
+		double[][] mat = new double[nbligne][nbcolonne];
+		
+		if(nbligne<=this.tailleMatrice() || nbcolonne<=this.lignes[0].taille() ) {
+			for(int i=0; i<nbligne; i++) {
+				Vecteur lignes = this.getLigne(i);
+				for(int j=0; j<nbcolonne; j++) {
+					mat[i][j] = lignes.getValeur(j);
+				}
+			}
+			
+			Matrice newmat = new Matrice(mat);
+			
+			return newmat;
+		}
+		else throw new IllegalArgumentException("erreur");
+	}
+	
+	public static Matrice creerMatriceNul (int nbligne, int nbcolonne) {
+	    Matrice matrice = new Matrice(nbligne, nbcolonne);
+	    
+	    for(int i=0; i<nbligne; i++){	       
+	        for(int j=0; j<nbcolonne; j++){
+	            matrice.lignes[i].setValeur(j, 0);
+	        }
+	    }
+	    return matrice;        
+	}
 
 
-    public Matrice sousMatrice(int nombreligne,int nombrecolonne){
-        if(nombreligne >lignes.length || nombrecolonne>lignes[0].taille() ){
-            throw new IllegalArgumentException("Reduction de matrice non autorisÃ©e(mauvaise valeurs)");
-        }
-        else{
-            double[][] systeme1 = new double[nombreligne][nombrecolonne];
-            for (int i=0;i<nombreligne;i++){
-                for (int j=0;j<nombrecolonne;j++){
-                   systeme1[i][j]= lignes[i].getValeur(j);
-                }
-                    
-            }
-            Matrice res = new Matrice(systeme1);
-            return res;
-        }
-    }
-    
-    public Matrice creerMatId(){
-        if (nombreLigne()!=nombreColonne()){
-            throw new IllegalArgumentException("La matrice identite doit etre carre");
-        }
-        else{
-            Matrice mat= new Matrice(nombreLigne(),nombreColonne());
-            for(int i=0;i<nombreLigne();i++){
-                mat.lignes[i].setValeur(i,1);
-            }
-            return mat;
-            }
-    }
-    
-    //Surcharges
-    
-    @Override
-    public String toString() {
-
-        String res = "";
-
-        for (Vecteur v : lignes) {
-            res += v + "\n";
-        }
-
-        return res;
-    }
-    
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Matrice other = (Matrice) obj;
-        if (!Arrays.equals(lignes, other.lignes))
-            return false;
-        return true;
-    }
+	public void setLigne(Vecteur[] lignes) {
+		this.lignes = lignes;
+	}
+	
+	public Matrice creerMatriceIdentite(){
+	    
+	    if(this.tailleMatrice() == this.lignes[0].taille()){
+	        for(int i=0; i<this.tailleMatrice(); i++){
+	            for(int j=0; j<this.lignes[0].taille(); j++){
+	               if(i == j){
+	                  this.lignes[i].setValeur(j, 1);
+	               }
+	               else this.lignes[i].setValeur(j, 0);
+	            }
+	        }
+	        return this;
+	    }
+	    else throw new IllegalArgumentException("erreur");
+	}
 }

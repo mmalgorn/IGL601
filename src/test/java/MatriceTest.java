@@ -1,10 +1,15 @@
+/*
+ * classe modifiee par Melissa L'henoret
+ * matricule: 17 148 784
+ */
+
 package test.java;
+
 import static org.junit.Assert.*;
 
-import org.junit.Before;
 import org.junit.Test;
-
 import main.java.Matrice;
+import org.junit.Before;
 
 public class MatriceTest
 {
@@ -14,129 +19,108 @@ public class MatriceTest
             { 7, 10, 1, 2 },
             { -3, 2, -5, 6 }
         };
-    
     double[][] systeme2 = {
 
             { 3, 5, -3, 15 },
             { 7, 10, 1, 2 },
-            { -3, 2, -5, 6 },
             { -3, 2, -5, 6 }
         };
-    
-    
-    Matrice m1 = new Matrice(systeme1);
-    Matrice m2 = new Matrice(systeme2);
+    double[][] systeme3 = {
+
+            { 3, 5, -3 },
+            { 7, 10, 1 },
+            { -3, 2, -5}
+        };
+    double[][] systeme4 = {
+
+            { 0, 0, 0, 0 },
+            { 0, 0, 0, 0 },
+            { 0, 0, 0, 0 }
+        };
+    double[][] systeme6 = {
+
+            { 1, 0, 0 },
+            { 0, 1, 0 },
+            { 0, 0, 1 }
+        };
+    Matrice mat = new Matrice(systeme1);
+    Matrice mat2 = new Matrice(systeme2);
+    Matrice mat3 = new Matrice(systeme3);
+    Matrice mat4 = new Matrice(systeme4);
+    Matrice mat6 = new Matrice(systeme6);
     
     @Before
-    public void setup(){
-        Matrice m1 = new Matrice(systeme1);
-        Matrice m2 = new Matrice(systeme2);
-    }
-    
-    
-    
-    @Test
-    public void testToString()
+    public void setup()
     {
-        
-        
-        String resAttendu = "[3.0 5.0 -3.0 15.0]\n[7.0 10.0 1.0 2.0]\n[-3.0 2.0 -5.0 6.0]\n";
-        
-        assertTrue(m1.toString().equals(resAttendu));
+         mat = new Matrice(systeme1);
+         mat2 = new Matrice(systeme2);
+         mat3 = new Matrice(systeme3);
+         mat4 = new Matrice(systeme4);
+         mat6 = new Matrice(systeme6);
     }
-    
-   
-    
+  
     @Test
-    public void testEquals() {
-        double[][] systeme2 = {
-
-                { 3, 5, -3, 15 },
-                { 7, 10, 1, 2 },
-                { -3, 2, -5, 6 }
-            };
-        
-        Matrice resAttendu = new Matrice(systeme2);
-        
-        assertEquals(m1,resAttendu);        
-
-    }
-    
-    
-    
-    @Test
-    public void testGauss()
+    public void test()
     {
-    m1.Gauss();
-    double[][] systeme2 = {
-
-            { 1.0, 0.0, 0.0,  133./32},
-            { 0.0, 1.0, 0.0, -9./4 },
-            { 0.0, 0.0, 1.0, -147./32 }
-        };
-    Matrice resAttendu = new Matrice(systeme2);
-    
-    assertEquals(m1,resAttendu); 
+        assertEquals("[3.0 5.0 -3.0 15.0]\n[7.0 10.0 1.0 2.0]\n[-3.0 2.0 -5.0 6.0]\n", mat.toString());
     }
     
+    @Test
+    public void testEquals()
+    {
+        assertTrue(mat.equals(mat2));
+    }
     
+    @Test
+    public void testGaussNormal()
+    {
+       mat.Gauss();
+        
+        assertEquals("[1.0 0.0 0.0 4.15625]\n[0.0 1.0 0.0 -2.25]\n[0.0 0.0 1.0 -4.59375]\n", mat.toString());
+    }
+    
+    @Test
+    public void testGaussIdentite()
+    {
+        mat.Gauss();
+        Matrice mat7 = mat.SousMatrice(3,3);
+        assertTrue(mat6.equals(mat7));
+    }
     
     @Test(expected=IllegalArgumentException.class)
-    public void testSousMatrice(){
-        Matrice m3=m1.sousMatrice(6,6);
+    public void testGaussException() {
+    	mat3.Gauss();
     }
-    
-    
-    
-    @Test
-    public void testMatriceNul(){
-        
-        Matrice m3=new Matrice(4,4);
-        
-        for(int i=0;i<m3.nombreLigne();i++){
-            
-            for(int j=0;j<m3.nombreColonne();j++){
-                
-                assert(m3.getLigne(i).getValeur(j)!=0);
-            }
-        }               
-    }
-    
-    
-    
-    @Test
-    public void testContenuMatriceIdentite(){
-        m2=m2.creerMatId();
-        for (int i=0;i<m2.nombreLigne();i++){
-            for (int j=0;j<m2.nombreColonne();j++){
-                if (i==j){
-                    assertEquals(m2.getLigne(i).getValeur(j),1.,0.01);
-                }
-                else {
-                    assertEquals(m2.getLigne(i).getValeur(j),0.,0.01);                           //JE NE COMPREND PAS, KESSECÃ‰...???
-                }
-            }
-        }
-    }
-    
-    
     
     @Test(expected=IllegalArgumentException.class)
-    public void testCreationMatriceIdentite(){
-        m1.creerMatId();
+    public void testSousMatriceException() 
+    {
+    	mat4 = mat.SousMatrice(4,5);
     }
-    
+
+    @Test
+    public void testSousMatriceNormal() 
+    {
+    	mat4 = mat.SousMatrice(3,3);
+    	assertTrue(mat4.equals(mat3));
+    }
     
     @Test
-    public void testVerifGaussEstMatId(){
-        m1.Gauss();
-        m1=m1.sousMatrice(3, 3);
-        m2=m2.creerMatId();
-        m2=m2.sousMatrice(3, 3);
-        assertEquals(m1,m2);
+    public void testCreerMatriceNull() 
+    {
+        Matrice mat5 = Matrice.creerMatriceNul(3,4);
+        assertTrue(mat5.equals(mat4));
     }
     
+    @Test
+    public void testCreerMatriceIdentiteNormal() {
+        mat3.creerMatriceIdentite();
+        assertTrue(mat3.equals(mat6));
+    }
     
-    
+    @Test(expected=IllegalArgumentException.class)
+    public void testCreerMatriceIdentiteException() {
+        mat.creerMatriceIdentite();
+    }
     
 }
