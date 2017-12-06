@@ -1,11 +1,11 @@
-package Tests;
+package test.java;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import labo2.Matrice;
-import labo2.Vecteur;
+import main.java.Matrice;
+import main.java.Vecteur;
 
 public class FonctionnelTest
 {
