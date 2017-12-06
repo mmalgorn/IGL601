@@ -56,6 +56,7 @@ public class VecteurTest {
 	public void testSousVecteur2(){
         Vecteur l3=l1.sousVecteur(3);   
         assertEquals(l2,l3);
+	assertTrue(false);
     }
 	
 	//Cas exceptionnel
