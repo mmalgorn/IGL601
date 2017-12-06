@@ -1,74 +1,79 @@
-/*
- * classe modifiee par Melissa L'henoret
- * matricule: 17 148 784
- */
-
 package test.java;
 
 import static org.junit.Assert.*;
 
-
+import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import main.java.Equation;
 
-public class EquationTest {
-
-	String e = "3x + 5y - 2z = 0";
-	String e6 = "3x + 5y - 2z = 0";
-	
-	Equation equation1 = new Equation(e);
-	Equation equation6 = new Equation(e6);
-	
-	
-	@Before
-	public void setUp() {
-		equation1 = new Equation(e);
-		equation6 = new Equation(e6);
-		
-	}
-
-	@Test(expected=IllegalArgumentException.class)
-    public void testEquationExceptionConstante() 
-    {
-		String e2 = "3x + 5y - 2z = ";
-		Equation equation2 = new Equation(e2);
+public class EquationTest
+{
+    String equation1 = "3x + 5y - 2z = 0";
+    Equation eq1=new Equation(equation1);
+    String equation2 = "3x + 5y - 2z = 0";
+    Equation eq2=new Equation(equation2);
+    
+    @Before
+    public void setup(){
+        eq1=new Equation(equation1);
     }
-	
-	@Test(expected=IllegalArgumentException.class)
-	public void testEquationExceptionVariable() 
-	{
-		String e3 = "3x + 5x - 2z = 0";		
-		Equation equation3 = new Equation(e3);
-	}
-	
-	@Test(expected=IllegalArgumentException.class)
-	public void testEquationExceptionSuiteConstante() 
-	{
-		String e4 = "3x + 5x - 2z = 0+";		
-		Equation equation4 = new Equation(e4);
-	}
-	
-	@Test(expected=IllegalArgumentException.class)
-    public void testEquationExceptionEgalConstante() 
+        
+    @Test
+    public void egalite()
     {
-		String e5 = "3x + 5y - 2z ";
-		Equation equation5 = new Equation(e5);
+        ArrayList<Character> variables = new ArrayList<Character>();
+        ArrayList<Integer> coefficients = new ArrayList<Integer>();
+        variables.add('x');
+        variables.add('y');
+        variables.add('z');
+        coefficients.add(3);
+        coefficients.add(5);
+        coefficients.add(-2);
+        int constante=0;
+        eq2=new Equation(variables,coefficients,constante);
+        assertEquals(eq1,eq2);       
     }
-	
-	@Test
-	public void testToString() {
-		
-		assertEquals("3x + 5y - 2z = 0", equation1.toString());
-		
-	}
-	
-	@Test
-    public void testEquals()
+    
+    
+    @Test(expected=IllegalArgumentException.class)
+    public void testSansSecondMembre()
     {
-        assertTrue(equation1.equals(equation6));
+        String equation2 = "3x + 5y - 2z = ";
+        eq2=new Equation(equation2);  
     }
-
+ 
+    
+    @Test(expected=IllegalArgumentException.class)
+    public void testVariableDupliquee()
+    {
+        String equation2 = "3x + 5x - 2z = 0";
+        eq2=new Equation(equation2);   
+    }
+    
+    
+    @Test(expected=IllegalArgumentException.class)
+    public void testSecondMembreCalculatoire()
+    {
+        String equation2 = "3x + 5y - 2z = 3 + 5";
+        eq2=new Equation(equation2);       
+    }
+ 
+    
+    @Test(expected=IllegalArgumentException.class)
+    public void testSansEgalite()
+    {
+        String equation2 = "3x + 5y - 2z ";
+        eq2=new Equation(equation2);       
+    }
+ 
+    
+    @Test
+    public void affichage()
+    {
+        assertTrue(eq1.toString().equals(equation2));       
+    }
+    
 }
