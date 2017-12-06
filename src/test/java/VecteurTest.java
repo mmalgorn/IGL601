@@ -1,12 +1,11 @@
-package test.java;
+package Tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import main.java.Vecteur;
+import labo2.Vecteur;
 
 public class VecteurTest {
 
@@ -25,22 +24,20 @@ public class VecteurTest {
 		
 	}
 	
-	
+
 	@Test
 	public void testToString() {
 
 		
 		String resAttendu = "[1.0 2.0 3.0 14.0]";
 		
-		assertTrue(l1.toString().equals(resAttendu));
-		
-		
-		
+		assertTrue(l1.toString().equals(resAttendu));		
 	}
 
 	
+	// Test Equals
 	@Test
-	public void testEquals() {
+	public void equals() {
 
 		double[] s2 = { 1, 2, 3, 14 };		
 		
@@ -49,7 +46,26 @@ public class VecteurTest {
 		assertEquals(l1,resAttendu);		
 		
 	}
+	
+	@Test
+	public void equalsSameObject(){
+	    assertEquals(l1,l1);
+	}
+	
+	@Test
+    public void nonEqualsNull(){
+        assertFalse(l1.equals(null));
+    }
 
+	@Test
+    public void nonEqualsNotSameObject(){
+        assertFalse(l1.equals(s1));
+    }
+	
+	@Test
+    public void nonEqualsNotSameVecteur(){
+        assertFalse(l1.equals(l2));
+    }
 	
 	//Cas normal
 	@Test
@@ -61,9 +77,10 @@ public class VecteurTest {
 	//Cas exceptionnel
 	@Test(expected=IllegalArgumentException.class)
     public void testSousVecteur(){
-	    l3=l1.sousVecteur(6);   
+	    l3=l1.sousVecteur(6);
     }
 
+	
 	
 	@Test
 	public void testVecteurNul(){
@@ -71,5 +88,10 @@ public class VecteurTest {
 	    for(int i=0;i<l3.taille();i++){
 	        assert(l3.getValeur(i)==0);
 	    }
+	}
+	
+	@Test
+	public void testHashCode(){
+	    assertEquals(l1.hashCode(),-1153296480);
 	}
 }

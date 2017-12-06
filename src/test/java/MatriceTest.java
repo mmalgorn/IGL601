@@ -35,6 +35,7 @@ public class MatriceTest
     Matrice m3 = new Matrice(systeme3);
     
     
+    
     @Before
     
     public void setup(){
@@ -70,7 +71,39 @@ public class MatriceTest
 
     }
     
+    @Test
+    public void equalsThis() {
+    	assertEquals(m1,m1);
+    }
+    
+    @Test
+    public void notEqualsNull() {
+    	assertFalse(m1.equals(null));
+    }
+    
+    @Test
+    public void notEqualsClass() {
+    	assertFalse(m1.equals(new Integer(5)));
+    }
+    
+    @Test 
+    public void notEquals() {
+        double[][] systeme2 = {
+
+                { 5, 6, -3, 15 },
+                { 7, 10, 1, 2 },
+                { -3, 2, -5, 6 }
+            };
         
+        Matrice resAttendu = new Matrice(systeme2);
+        assertFalse(m1.equals(resAttendu));
+    }
+    
+        
+    @Test 
+    public void TesthashCode() {
+    	assertEquals(-96462818,m1.hashCode());
+    }
     @Test
     public void testGauss()
     {

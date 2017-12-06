@@ -104,6 +104,11 @@ public class EquationTest
     }
     
     
+    @Test 
+    public void testHashCode() {
+    	assertEquals(31725522,eq1.hashCode());
+    }
+    
     @Test(expected=IllegalArgumentException.class)
     public void testSansSecondMembre()
     {
