@@ -45,7 +45,7 @@ public class Equation
             } else if (isOperatorEquals(val)) {
 
                 if (!tokenizer.hasMoreTokens())
-                    throw new IllegalArgumentException("Equation: equation mal formee (constante manquante ï¿½ la fin");
+                    throw new IllegalArgumentException("Equation: equation mal formee (constante manquante � la fin");
 
                 constante = Integer.parseInt(tokenizer.nextToken().trim());
                 complete = true;

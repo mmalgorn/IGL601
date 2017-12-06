@@ -89,18 +89,25 @@ public class Vecteur {
     }
     
     @Override
-    public boolean equals(Object obj)
-    {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Vecteur other = (Vecteur) obj;
-        if (!Arrays.equals(valeurs, other.valeurs))
-            return false;
-        return true;
-    }
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(valeurs);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Vecteur other = (Vecteur) obj;
+		if (!Arrays.equals(valeurs, other.valeurs))
+			return false;
+		return true;
+	}
 
 }

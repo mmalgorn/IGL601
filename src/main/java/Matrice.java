@@ -155,6 +155,7 @@ public class Matrice {
     @Override
     public boolean equals(Object obj)
     {
+    	//test
         if (this == obj)
             return true;
         if (obj == null)
