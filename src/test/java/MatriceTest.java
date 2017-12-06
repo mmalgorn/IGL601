@@ -69,7 +69,6 @@ public class MatriceTest
     public void testEquals()
     {
         assertTrue(mat.equals(mat2));
-        assertTrue(false);
     }
 
     @Test
