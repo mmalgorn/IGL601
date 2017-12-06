@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
-public class equation extends Vecteur {
+public class Equation extends Vecteur {
 	
 	private ArrayList<Character> variables = new ArrayList<Character>();
 
