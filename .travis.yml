@@ -19,3 +19,16 @@ notifications:
   email:
     - m.malgorn29@gmail.com
     - gab151196@hotmail.fr
+  
+before_deploy:
+   - mvn package
+deploy:
+  skip_cleanup: true
+  provider: releases
+  api_key:
+    secure:  bcd9ef2d98879ec61c54e6d30e645572f5632430
+  file:
+    - "target/dependency-jars/*"
+  on:
+    tags: false
+    all_branches: true
