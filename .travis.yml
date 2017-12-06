@@ -26,7 +26,7 @@ deploy:
   skip_cleanup: true
   provider: releases
   api_key:
-    secure:  bcd9ef2d98879ec61c54e6d30e645572f5632430
+    secure:  129d28dabca7d1d29b30026ad94ebe873f1daade
   file:
     - "target/dependency-jars/*"
   on:
