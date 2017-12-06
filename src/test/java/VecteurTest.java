@@ -1,11 +1,11 @@
-package Tests;
+package test.java;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import labo2.Vecteur;
+import main.java.Vecteur;
 
 public class VecteurTest {
 
