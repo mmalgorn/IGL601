@@ -110,7 +110,7 @@ public class MatriceTest
             
             for(int j=0;j<m3.nombreColonne();j++){
                 
-                assert(m3.getLigne(i).getValeur(j)!=0);
+                assertFalse(m3.getLigne(i).getValeur(j)!=0);
             }
         }               
     }

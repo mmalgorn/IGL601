@@ -68,7 +68,6 @@ public class EquationTest
         String equation2 = "3x + 5y - 2z ";
         eq2=new Equation(equation2);       
     }
- 
     
     @Test
     public void affichage()
