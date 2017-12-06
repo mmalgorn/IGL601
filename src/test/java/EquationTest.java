@@ -35,6 +35,72 @@ public class EquationTest
         int constante=0;
         eq2=new Equation(variables,coefficients,constante);
         assertEquals(eq1,eq2);       
+        assertEquals(eq1,eq1);
+    }
+    
+    @Test
+    public void nonEgalite() {
+    	assertFalse(eq1.equals(new Integer(5)));
+    	assertFalse(eq1.equals(null));
+    	
+    }
+    
+    @Test 
+    public void nonEgaliteCoef() {
+    	 ArrayList<Character> variables = new ArrayList<Character>();
+         ArrayList<Integer> coefficients = new ArrayList<Integer>();
+         variables.add('x');
+         variables.add('y');
+         variables.add('z');
+         int constante=0;
+         eq2=new Equation(variables,coefficients,constante);
+         assertFalse(eq1.equals(eq2));
+    }
+    
+    @Test
+    public void nonEgaliteCoefNull() {
+   	 ArrayList<Character> variables = new ArrayList<Character>();
+     variables.add('x');
+     variables.add('y');
+     variables.add('z');
+     int constante=0;
+     eq2=new Equation(variables,null,constante);
+     assertFalse(eq2.equals(eq1));
+    }
+    
+    @Test
+    public void nonEgaliteConstante() {
+    	 ArrayList<Character> variables = new ArrayList<Character>();
+         ArrayList<Integer> coefficients = new ArrayList<Integer>();
+         coefficients.add(3);
+         coefficients.add(5);
+         coefficients.add(-2);
+         int constante=5;
+         eq2=new Equation(variables,coefficients,constante);
+         assertFalse(eq1.equals(eq2));
+    }
+    
+    @Test 
+    public void nonEgaliteVar() {
+    	 ArrayList<Character> variables = new ArrayList<Character>();
+         ArrayList<Integer> coefficients = new ArrayList<Integer>();
+         coefficients.add(3);
+         coefficients.add(5);
+         coefficients.add(-2);
+         int constante=0;
+         eq2=new Equation(variables,coefficients,constante);
+         assertFalse(eq1.equals(eq2));
+    }
+    
+    @Test
+    public void nonEgaliteVarNull() {
+     ArrayList<Integer> coefficients = new ArrayList<Integer>();
+     coefficients.add(3);
+     coefficients.add(5);
+     coefficients.add(-2);
+     int constante=0;
+     eq2=new Equation(null,coefficients,constante);
+     assertFalse(eq2.equals(eq1));
     }
     
     
