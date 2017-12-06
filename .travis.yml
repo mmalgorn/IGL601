@@ -22,11 +22,14 @@ notifications:
   
 before_deploy:
    - mvn package
+   - git config --local user.name "mmalgorn"
+   - git config --local user.email "m.malgorn29@gmail.com"
+   - git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
 deploy:
   skip_cleanup: true
   provider: releases
   api_key:
-    secure:  129d28dabca7d1d29b30026ad94ebe873f1daade
+    secure: 737912c116b7a1c777c6e3c9c2c852e1fad348a8
   file:
     - "target/dependency-jars/*"
   on:
