@@ -45,7 +45,7 @@ public class Equation
             } else if (isOperatorEquals(val)) {
 
                 if (!tokenizer.hasMoreTokens())
-                    throw new IllegalArgumentException("Equation: equation mal formee (constante manquante à la fin");
+                    throw new IllegalArgumentException("Equation: equation mal formee (constante manquante a la fin");
 
                 constante = Integer.parseInt(tokenizer.nextToken().trim());
                 complete = true;
@@ -133,33 +133,38 @@ public class Equation
     }
 
     @Override
-    public boolean equals(Object obj)
-    {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Equation other = (Equation) obj;
-        if (coefficients == null)
-        {
-            if (other.coefficients != null)
-                return false;
-        }
-        else if (!coefficients.equals(other.coefficients))
-            return false;
-        if (constante != other.constante)
-            return false;
-        if (variables == null)
-        {
-            if (other.variables != null)
-                return false;
-        }
-        else if (!variables.equals(other.variables))
-            return false;
-        return true;
-    }
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((coefficients == null) ? 0 : coefficients.hashCode());
+		result = prime * result + constante;
+		result = prime * result + ((variables == null) ? 0 : variables.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Equation other = (Equation) obj;
+		if (coefficients == null) {
+			if (other.coefficients != null)
+				return false;
+		} else if (!coefficients.equals(other.coefficients))
+			return false;
+		if (constante != other.constante)
+			return false;
+		if (variables == null) {
+			if (other.variables != null)
+				return false;
+		} else if (!variables.equals(other.variables))
+			return false;
+		return true;
+	}
     
     
 }
