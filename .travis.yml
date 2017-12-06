@@ -1,28 +1,32 @@
 language: java
+
 udo: false
 install: true
 addons:
   sonarcloud:
-    organization: mmalgorn-github
+    organization: "mmalgorn-github"
     token:
-      secure: 21e382b1e225561dc00582c9f4dfab62ca132006
+      secure: "21e382b1e225561dc00582c9f4dfab62ca132006"
 jdk:
-- oraclejdk8
+  - oraclejdk8
 script:
-- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
 cache:
   directories:
-  - "$HOME/.m2/repository"
-  - "$HOME/.sonar/cache"
+    - '$HOME/.m2/repository'
+    - '$HOME/.sonar/cache'
 notifications:
   email:
-  - m.malgorn29@gmail.com
-  - gab151196@hotmail.fr
+    - m.malgorn29@gmail.com
+    - gab151196@hotmail.fr
+
 before_deploy:
-- mvn package
-- git config --local user.name "mmalgorn"
-- git config --local user.email "m.malgorn29@gmail.com"
-- git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
+   - mvn package
+
 deploy:
-  api-key:
-    secure: sxKtWdU/VT2K/ea0rJPRErpyF7iHvjkLF5/cvjrnI1TddE2X1DVcnq1bMOiHMcBrSuDFLdgaYAgGyKOYLJMNl19gpvXO+nEhsw8gguV8U+HMFHfwpaYtIOVwCSQaJPQ/0Gdu/O6XSFlpczupZQaerQ6wF0mrqFg+0gS+/oFjPeajRQIDo5va7/g9zFrzYre8vhXDgv0cVeGAQlwA1n5AYW4YSTvxHFSaTmlph9wnr+f7xYucf15DSFx6MxFpifRzZwx42DD2g58F9my8U/oa43/mTIGh6qVZwTOCUqO8Tdat6wt+ciuasjBrEeMlpFRJa9DdGFgBPrKmrAN49Wqmvgs/DaMdCLxtFFVyebwnapVG5kfDw8mbpDM/iW6gwLnMVz54U7v/AT3/kHQlOV139+pJi/UMVtn4Ni8NSRwO/XP5RU9HOrOyFVACMwWAfhvxB3/QH59qp5xaBex/KWmdUFPLwTkwFpJn3aEsKsKiGC4wsAmEuDGy6JyPM9MN1R7dYJ8xQO3v/IJxep4oGNk3Nl+Z9lF6qysDsTtOMVPDLAhwx473BnLHGrTkWzVFoS7A8xgN4VMyjSUaqlEFDJCJuxPidc4UBpqDlgtfdd1lJjiW9ewgGB5uBX1Bn1DBfysjtyxUn7sY294SRwaz3x/yDKjeb1rtl7cYlLW6IKE2Jq8=
+  skip_cleanup: true
+  file:
+    - "target/dependency-jars/*"
+  on:
+    tags: false
+    all_branches: true
