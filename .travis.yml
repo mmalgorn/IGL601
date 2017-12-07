@@ -10,7 +10,6 @@ jdk:
 - oraclejdk8
 script:
 - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
-- ls /home/travis/build/mmalgorn/IGL601/target/dependency-jars/
 cache:
   directories:
   - "$HOME/.m2/repository"
@@ -25,7 +24,7 @@ deploy:
   provider: releases
   user: mmalgorn
   file:
-  - /home/travis/build/mmalgorn/IGL601/target/dependency-jars/*
+  - /home/travis/build/mmalgorn/IGL601/target/*.jar
   on:
     tags: false
     all_branches: true
